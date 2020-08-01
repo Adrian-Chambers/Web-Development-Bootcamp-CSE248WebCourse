@@ -1,15 +1,17 @@
 
-/* Make sound when clicking a picture */
+/* Make sound when clicking a button/image */
 for(var i = 0; i < document.querySelectorAll(".drum").length; i++){     // loop through each button with class "drum"
     document.querySelectorAll(".drum")[i].addEventListener("click", function(){     // add "click" event listener
         var buttonInnerHTML = this.innerHTML;       // get letter inside of the button
         makeSound(buttonInnerHTML);                 // pass letter to "makeSound" function
+        buttonAnimation(buttonInnerHTML);           // pass letter to "buttonAnimation" function  
     });
 }
 
 /* Make sound when typing a key */
 document.addEventListener("keydown", function(event){   // add "keydown" event listener to the document to sense when a key is pressed
     makeSound(event.key);   // event.key checks the event for which key was pressed. pass that letter to "makeSound" function
+    buttonAnimation(event.key);   // pass key to buttonAnimation function
 });
 
 /* Make sound function */
@@ -34,4 +36,15 @@ function makeSound(key){
     }
 
     audio.play();   // play audio file
+}
+
+function buttonAnimation(currentKey){
+    var activeButton = document.querySelector("." + currentKey);    // get active button
+    
+    activeButton.classList.add("pressed");  // apply shadow to it
+    
+    setTimeout(function(){  // timeout function lets you pick which function to execute and how long to wait until executing it
+        activeButton.classList.remove("pressed");       // remove shadow
+    }, 100);    // wait 100 milliseconds or 1 second
+
 }
